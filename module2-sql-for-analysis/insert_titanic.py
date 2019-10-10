@@ -50,7 +50,10 @@ pg_curs.execute(create_titanic_table)
 #instantiating list of all data in titanic df with each line being a tuple
 titanic_list = ti_curs.execute("SELECT * FROM Titanic;").fetchall()
 
-print(titanic_list[0:5])
-
-pg_curs.close()
-pg_conn.commit()
+for i in titanic_list:
+    populatelist = '''
+        INSERT INTO titanic_table
+        (survived, pclass, name, sex, age, siblingsspouses, parentschildren, fare)
+        VALUES
+        ''' + str(i[1:]) + ';'
+    pg_curs.execute(populatelist)
